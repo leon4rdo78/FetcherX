@@ -1,16 +1,9 @@
 name: Fetch Configs
-
+permissions: write-all
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
-
-permissions:
-  contents: write
-
-concurrency:
-  group: fetch-configs
-  cancel-in-progress: true
 
 jobs:
   run-fetcher:
@@ -18,12 +11,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v2
         with:
           python-version: "3.12"
 
@@ -39,13 +33,10 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
           git add archive/ logs/
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
           timestamp=$(TZ='Asia/Tehran' date)
           git commit -m "✅ Updated Fetchs output on ${timestamp}"
           git push
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
