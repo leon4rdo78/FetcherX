@@ -2,9 +2,7 @@ name: Fetch Configs
 
 on:
   schedule:
-    - cron: "*/20 * * * *"
-  push:
-    branches: [ main ]
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -48,6 +46,6 @@ jobs:
             echo "No changes to commit."
           else
           timestamp=$(TZ='Asia/Tehran' date)
-          git commit -m "✅Updated Fetchs output on ${timestamp}"
-            git push
-          fi
+          git commit -m "✅ Updated Fetchs output on ${timestamp}"
+          git push
+  
