@@ -28,7 +28,7 @@ jobs:
           pip install requests
 
       - name: Run script
-        run: python Fetcher.py
+        run: python fetcher.py
 
       - name: Upload archive and logs
         if: always()
