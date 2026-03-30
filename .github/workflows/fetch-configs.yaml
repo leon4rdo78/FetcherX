@@ -45,6 +45,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update fetched data"
+          timestamp=$(TZ='Asia/Tehran' date)
+          git commit -m "✅Updated Fetchs output on ${timestamp}"
             git push
           fi
